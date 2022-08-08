@@ -1,0 +1,63 @@
+body{
+    display: flex;
+    justify-self: center;
+    align-items: center;
+}
+div{
+    border: 1px solid red;
+}
+.gameboard-container{
+    width: 40em;
+    height: 40em;
+    min-width: 40em;
+    min-height: 40em;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    place-items: center;
+
+    
+    
+}
+.dealer-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 20em;
+    height: 5em;
+}
+.user-player{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 20em;
+    height: 5em;
+}
+
+.button-message-container{
+    display: flex;
+    flex-direction: row;
+}
+.button-container{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid blue;
+    justify-content: center;
+    align-items: center;
+}
+.start-end-container {
+    display: flex;
+    flex-direction: column;
+    width: 8em;
+    height: 3em;
+    /* gap: 1em; */
+}
+.bet-hit-stand{
+    display: flex;
+    flex-direction: row;
+    width: 8em;
+    height: 3em;
+}
