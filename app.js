@@ -52,8 +52,16 @@ const playingCards = [
  {queenHeart: new PlayingCards(10, "Heart", "Red")},
  {queenClub: new PlayingCards(10, "Club", "Black")},
  {queenSpade: new PlayingCards(10, "Spade", "Black")},
+ {kingDiamond: new PlayingCards(10, "Diamond", "Red")},
+ {kingHeart: new PlayingCards(10, "Heart", "Red")},
+ {kingClub: new PlayingCards(10, "Club", "Black")},
+ {kingSpade: new PlayingCards(10, "Spade", "Black")},
+ {aceDiamond: new PlayingCards(11, "Diamond", "Red")},
+ {aceHeart: new PlayingCards(11, "Heart", "Red")},
+ {aceClub: new PlayingCards(11, "Club", "Black")},
+ {aceSpade: new PlayingCards(11, "Spade", "Black")},
 ];
-console.log(playingCards[9].FourHeart.number)
+console.log(playingCards[9].fourHeart.number)
 
 let playerCards = [],AICards1 = [],AICards2 = [];
 let playerMoney = 0,AIMoney1 = 0,AIMoney2 = 0;
