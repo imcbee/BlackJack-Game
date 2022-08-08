@@ -1,0 +1,117 @@
+End Goal: To make a BlackJack game with 3 AIs
+
+How the game works
+    1. Start Game - click start game button
+        -Start amount: $500 (for everyone)
+    2. Player and AIs make their bets. 1 or 2 chips. ($10 chips)
+        -AI1 will bet riskier = 2 chips
+        -AI2 will bet safer = 1 chip
+    3. 2 face up cards are dealt to the player and AIs. Dealer has 1 card and 1 card down.
+        -deal order: left to right, dealer last
+    4. Player, AI and Dealer make decision to hit or stand.
+        -AI1 (risky) will hit if under 17, stand above
+        -AI2 (safety) will hit if under 14, stand above
+        -**coding for dealer will be tricky...how to do this?**
+    5. Assess if player or AIs beat Dealer
+    6. Payouts for wins and loses
+        -3:2 for BJ wins
+    7. Repeat steps until end game
+        -Break if money = 0
+        -Player can keep playing
+
+    Dealer Win Scenario (Loses)
+        -Per play: if player/AIs are over 21, dealer can be over and under 21 (bust)
+        -Whole Game loss: money = $0
+        -If AI money reaches to $0, they can go negative amount
+
+    Player/AI Win Scenarios (Win)
+        -if player/AIs are higher than dealer, but not over 21
+        -if player/AIs immediately get 21
+            -payout 3:2
+    
+    What BlackJack will not include
+        -splitting
+        -betting over 3 chips
+
+
+Pseudo Code
+    HTML
+        -Game Table container
+            -player, AI, dealer containers
+                -AI positioned 45 degrees
+            -button container
+                -buttons - grid and/or layout?
+                    -start game
+                    -end game
+                    -bet
+                        -one click
+                        -double click
+                    -hit
+                    -stand
+            -message board container
+                -dynamically add messages of the game as it progresses
+            -card stack container
+        **Challenges:
+            -how to have div elements free floating and at different angles?\
+            -probably need to have a a intro page for how to play?
+
+    CSS
+        -Game Table container
+            -background image - green card Table
+            -div container for blackjack payout sign?
+        -AI and user containers where cards are held
+            -background invisible
+            -playing cards assets
+        -message board 
+            -fixed and floating
+
+        **Challenges:
+            -player's cards zoom in with a hover event
+            -animation for card flipping over
+            -animation for cards floating towards player and AI div containers
+                -card spin while doing that
+
+    JS
+        Variables
+            -playing cards - class -> array of objects
+                -2-10 are face value
+                -J,Q,K are 10
+                -A is either 1 or 11  (how to alternate between both?)
+            -player1, AI1, AI2 and dealer current cards (array)
+            -sums of player/AI cards
+            -total money for player/AI
+            -DOM elements 
+                -player and AI divs
+                -dealer divs
+                -card elements
+                -buttons
+
+        Functions
+            -AI: not real AI, just if statements to decide 
+                -risky AI (right side) 
+                    - bets 2 chips
+                    - hits when 15 and below
+                -safety AI
+                    - bets 1 chips
+                    - hits when 10 below, but not above 17
+                -dealer AI
+                    - no betting
+                    - stops hitting when between 17-21
+                    - most riskest and more willing to go over 21 because of house advantages
+            -randomCard
+                -can't have the same card/indexes choosen in card 
+                -selecting cards through an objects
+            -Win and Loss Functions
+            -** Most functions will be in the event listeners or referenced global
+
+
+
+
+        Event Listeners
+            -listen for start game button
+                -game won't stop until $0, end game button or close browser
+            -listen for hit button
+            -listen for stand button
+            -listen for bet button
+                -1 click = 1 chip
+                -2 clicks = 2 chips, or is there a better click option?
