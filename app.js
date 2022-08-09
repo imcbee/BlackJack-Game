@@ -68,11 +68,13 @@
 // ];
 // console.log(playingCards[9].fourHeart.number)
 
-let playerCards = [],dealerCards = [],gameIsActive = false
+let playerCards = [],dealerCards = [],gameIsActive = false;
 let playerSum =0, dealerSum =0;
 let playerMoney = 0,AIMoney1 = 0,AIMoney2 = 0;
+
 let deck = buildDeck();
-shuffleDeck(deck)
+shuffleDeck(deck);
+//console.log(deck)
 
 
 
@@ -111,7 +113,8 @@ const dealerCard4 = document.querySelector('#card4');
     //shuffle deck
     function shuffleDeck(arr) {
         arr.sort(() => 0.5 - Math.random());
-        return arr
+        
+        //return arr
     }
 
     //deal cards
@@ -122,14 +125,19 @@ const dealerCard4 = document.querySelector('#card4');
         dealerCards.push(arr[3])   
     }
 
-    //hit cards
+    //hit cards for player
     function hitCards(arr) {
         playerCards.push(arr[4])
+        
     }
+
+    //hit cards for dealer
     
     //deal to dealer
     function dealToDealer() {
-        
+        if(dealerSum < 17) {
+
+        }
     }
 
     //get value of card
@@ -157,8 +165,9 @@ const dealerCard4 = document.querySelector('#card4');
         };
 
         return sumOfArr
-    }
-    //console.log(cardValue(["5-S","10-H","K-S"]))
+    };
+
+    console.log(cardValue(["5-S","10-H","K-S"]))
     // console.log(randomCard(playingCards))
     // console.log(playerCards)
     //console.log(playerCards)
@@ -169,43 +178,46 @@ const dealerCard4 = document.querySelector('#card4');
 //EventListeners
 startGame.addEventListener('click', function() {
     
-    
+    bet.addEventListener('click', function() {
+        console.log('what')
+    });
+
+    hit.addEventListener('click', function() {
+        
+        hitCards(deck)
+        console.log(playerCards)
+        userCard7.innerHTML = playerCards[2];
+        playerSum = cardValue(playerCards)  //cardvalue expects an array of strings, or the updated array
+        
+        console.log(playerSum)
+    });
+
+    stand.addEventListener('click', function() {
+        console.log('mhmm')
+    })
     //playerCards.push(deck[0])
+    
+    endGame.addEventListener('click', function() {
+        //console.log('howdy')
+        if(gameIsActive){window.location.reload();}
+        gameIsActive = false;
+    });
+
+    gameIsActive = true;
     dealCards(deck)
     
     dealerCard1.innerHTML = dealerCards[0]
     dealerCard2.innerHTML = dealerCards[1]
     userCard5.innerHTML = playerCards[0]
     userCard6.innerHTML = playerCards[1]
+    console.log(userCard5.innerHTML)
     
+
     playerSum += cardValue(playerCards)
     dealerSum += cardValue(dealerCards)
-
-    
 
     console.log(`Dealer: ${dealerSum}`)
     console.log(`player: ${playerSum}`)
     //console.log(dealerCards)
     
 });
-
-endGame.addEventListener('click', function() {
-    console.log('howdy')
-    gameIsActive = false;
-});
-
-bet.addEventListener('click', function() {
-    console.log('what')
-});
-
-
-hit.addEventListener('click', function() {
-    //console.log('uhh')
-    hitCards(deck)
-    userCard7.innerHTML = playerCards[2]
-});
-
-stand.addEventListener('click', function() {
-    console.log('mhmm')
-})
-console.log(playerSum)
