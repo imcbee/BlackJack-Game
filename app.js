@@ -68,7 +68,7 @@
 // ];
 // console.log(playingCards[9].fourHeart.number)
 
-let playerCards = [],dealerCards = [],gameIsActive = false, currentIndex = 0;
+let playerCards = [],dealerCards = [],clicked= false, currentIndex = 0;
 let playerSum =0, dealerSum =0;
 let playerMoney = 0,AIMoney1 = 0,AIMoney2 = 0;
 
@@ -81,7 +81,7 @@ shuffleDeck(deck);
 
 //DOM Variables
 const startGame = document.querySelector('#start-game');
-const endGame = document.querySelector('#end-game');
+const reset = document.querySelector('#end-game');
 const bet = document.querySelector('#bet');
 const hit = document.querySelector('#hit');
 const stand = document.querySelector('#stand');
@@ -145,15 +145,17 @@ const messageBoard = document.querySelector('#message-board-container');
         
         if(dealerSum < 17) {
             dealerCards.push(arr[5])
-            console.log(arr[5])
+            //console.log(arr[5])
             currentIndex++
+        }if(dealerSum > 17) {
+            return;
         }
         //wait()
     }
 
     //delay timer
     function wait() {
-        setTimeout(()=>{alert ('2 secs');},2000)
+        return setTimeout(function(){},5000)
     }
 
     //get value of card
@@ -216,14 +218,16 @@ startGame.addEventListener('click', function() {
     hit.addEventListener('click', function() {
         
         hitCards(deck)
-        console.log(playerCards)
+        
         userCard7.innerHTML = playerCards[2];
         playerSum = cardValue(playerCards)  //cardvalue expects an array of strings, or the updated array
         messageBoard.innerHTML = `Player Total: ${playerSum}`
+       
+        checkWin() 
         console.log(`Dealer: ${dealerSum}`)
         console.log(`player: ${playerSum}`)
-        checkWin()
-        console.log(currentIndex)
+        //console.log(playerCards)
+        //console.log(currentIndex)
     });
 
     stand.addEventListener('click', function() {
@@ -234,13 +238,13 @@ startGame.addEventListener('click', function() {
     })
     //playerCards.push(deck[0])
     
-    endGame.addEventListener('click', function() {
+    reset.addEventListener('click', function() {
         //console.log('howdy')
-        if(gameIsActive){window.location.reload();}
-        gameIsActive = false;
+        if(clicked){window.location.reload();}
+        clicked = false;
     });
     
-    gameIsActive = true;
+    clicked = true;
     dealCards(deck)
     
     dealerCard1.innerHTML = dealerCards[0]
@@ -253,16 +257,24 @@ startGame.addEventListener('click', function() {
     playerSum += cardValue(playerCards)
     dealerSum += cardValue(dealerCards)
     messageBoard.innerHTML = `Game Started!! Player Total: ${playerSum} Dealer Total: ${dealerSum}`
-
+     
+    if(dealerSum === 21) {
+        checkWin();
+        clicked = false;
+    }if(playerSum === 21) {
+        checkWin();
+        clicked = false;
+    }
+    
     
     dealToDealer(deck)
     dealerCard3.innerHTML = dealerCards[2];
     dealerSum = cardValue(dealerCards)
-    console.log(dealerCards)
+    //console.log(dealerCards)
     
     console.log(`Dealer: ${dealerSum}`)
     console.log(`player: ${playerSum}`)
-    console.log(currentIndex)
+    //console.log(currentIndex)
     //console.log(dealerCards)
     
 });
