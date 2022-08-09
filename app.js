@@ -68,11 +68,12 @@
 // ];
 // console.log(playingCards[9].fourHeart.number)
 
-let playerCards = [],dealerCards = [],gameIsActive = false;
+let playerCards = [],dealerCards = [],gameIsActive = false, currentIndex = 0;
 let playerSum =0, dealerSum =0;
 let playerMoney = 0,AIMoney1 = 0,AIMoney2 = 0;
 
 let deck = buildDeck();
+//console.log(deck)
 shuffleDeck(deck);
 //console.log(deck)
 
@@ -92,6 +93,7 @@ const dealerCard1 = document.querySelector('#card1');
 const dealerCard2 = document.querySelector('#card2');
 const dealerCard3 = document.querySelector('#card3');
 const dealerCard4 = document.querySelector('#card4');
+const messageBoard = document.querySelector('#message-board-container');
 
 
 //Functions
@@ -120,24 +122,38 @@ const dealerCard4 = document.querySelector('#card4');
     //deal cards
     function dealCards(arr) {
         playerCards.push(arr[0])
+        currentIndex++
         dealerCards.push(arr[1])
+        currentIndex++
         playerCards.push(arr[2])
-        dealerCards.push(arr[3])   
+        currentIndex++
+        dealerCards.push(arr[3])
+        currentIndex++   
     }
 
     //hit cards for player
     function hitCards(arr) {
         playerCards.push(arr[4])
+        currentIndex++
         
     }
 
-    //hit cards for dealer
     
-    //deal to dealer
-    function dealToDealer() {
-        if(dealerSum < 17) {
 
+    //deal to dealer
+    function dealToDealer(arr) {  //could be area of trouble, currentindex for later figuringout
+        
+        if(dealerSum < 17) {
+            dealerCards.push(arr[5])
+            console.log(arr[5])
+            currentIndex++
         }
+        //wait()
+    }
+
+    //delay timer
+    function wait() {
+        setTimeout(()=>{alert ('2 secs');},2000)
     }
 
     //get value of card
@@ -167,12 +183,27 @@ const dealerCard4 = document.querySelector('#card4');
         return sumOfArr
     };
 
-    console.log(cardValue(["5-S","10-H","K-S"]))
+    //console.log(cardValue(["5-S","10-H","K-S"]))
     // console.log(randomCard(playingCards))
     // console.log(playerCards)
     //console.log(playerCards)
 
-
+    //Win Evaulation
+    function checkWin() {
+        if(dealerSum === 21) {
+            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`
+        }else if(playerSum === 21) {
+            messageBoard.innerHTML = `Player Wins! Player Total: ${playerSum}`
+        }else if(playerSum > 21) {
+            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`
+        }else if(dealerSum > playerSum && dealerSum < 21) {
+            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`
+        }else if(playerSum > dealerSum && playerSum < 21) {
+            messageBoard.innerHTML = `Player Wins! Player Total: ${playerSum}`
+        }else if (dealerSum === playerSum) [
+            messageBoard.innerHTML = `Draw! Dealer Total: ${playerSum}, Player Total: ${playerSum} `
+        ]
+    }
 
 
 //EventListeners
@@ -188,12 +219,18 @@ startGame.addEventListener('click', function() {
         console.log(playerCards)
         userCard7.innerHTML = playerCards[2];
         playerSum = cardValue(playerCards)  //cardvalue expects an array of strings, or the updated array
-        
-        console.log(playerSum)
+        messageBoard.innerHTML = `Player Total: ${playerSum}`
+        console.log(`Dealer: ${dealerSum}`)
+        console.log(`player: ${playerSum}`)
+        checkWin()
+        console.log(currentIndex)
     });
 
     stand.addEventListener('click', function() {
-        console.log('mhmm')
+        //console.log('mhmm')
+        console.log(`Dealer: ${dealerSum}`)
+        console.log(`player: ${playerSum}`)
+        checkWin()
     })
     //playerCards.push(deck[0])
     
@@ -202,7 +239,7 @@ startGame.addEventListener('click', function() {
         if(gameIsActive){window.location.reload();}
         gameIsActive = false;
     });
-
+    
     gameIsActive = true;
     dealCards(deck)
     
@@ -210,14 +247,22 @@ startGame.addEventListener('click', function() {
     dealerCard2.innerHTML = dealerCards[1]
     userCard5.innerHTML = playerCards[0]
     userCard6.innerHTML = playerCards[1]
-    console.log(userCard5.innerHTML)
+    //console.log(userCard5.innerHTML)
     
 
     playerSum += cardValue(playerCards)
     dealerSum += cardValue(dealerCards)
+    messageBoard.innerHTML = `Game Started!! Player Total: ${playerSum} Dealer Total: ${dealerSum}`
 
+    
+    dealToDealer(deck)
+    dealerCard3.innerHTML = dealerCards[2];
+    dealerSum = cardValue(dealerCards)
+    console.log(dealerCards)
+    
     console.log(`Dealer: ${dealerSum}`)
     console.log(`player: ${playerSum}`)
+    console.log(currentIndex)
     //console.log(dealerCards)
     
 });
