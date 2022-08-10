@@ -7,7 +7,7 @@ let playerSum =0;
 let dealerSum =0;
 let playerMoney = 0;
 let discardPile = [];
-
+let dealer17 = 0;
 
 //DOM Variables
 const startGame = document.querySelector('#start-game');
@@ -64,14 +64,10 @@ const userElement= document.querySelector('#user-player');
         playerCards.push((arr.shift()));      
     };
 
-    let dealer17 = 0
+    
     //deal to dealer
-    function dealToDealer(arr) {  //could be area of trouble, currentindex for later figuringout
+    function dealToDealer(arr) { 
         dealerSum <= 17 ? dealerCards.push((arr.shift())) : dealer17++; 
-        
-        
-        // console.log(dealerCard3)
-        // console.log(dealerCards)
     };
 
     //get value of card
@@ -103,9 +99,14 @@ const userElement= document.querySelector('#user-player');
 
     //check player's money amount
     function checkMoney() {
-        if(playerMoney === 0) {
+        if(player === 25) {
+            messageBoard.innerHTML = `WARNIGN: Money is low! $${playerMoney}.`
+        };
+        if(playerMoney === 0 || playerMoney < 0) {
             messageBoard.innerHTML = `NO MORE MONEY! $${playerMoney}.`
-            setTimeout(function(){window.location.reload()},10000)
+            hit.disabled =true;
+            stand.disabled =true;
+            setTimeout(function(){window.location.reload()},3000)
         };
     };
 
@@ -113,44 +114,40 @@ const userElement= document.querySelector('#user-player');
     //Win Evaulation
     function checkWin() {
         if(dealerSum === 21) {
-            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;
             playerMoney -= 25;
+            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;            
             currentAmount.innerHTML = `$${playerMoney}`;
         }else if(playerSum === 21) {
-            messageBoard.innerHTML = `Player Wins! Player Total: ${playerSum}`;
             playerMoney += 25;
+            messageBoard.innerHTML = `Player Wins! Player Total: ${playerSum}`;
             currentAmount.innerHTML = `$${playerMoney}`;
         }else if(playerSum > 21) {
-            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;
             playerMoney -= 25;
+            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;            
             currentAmount.innerHTML = `$${playerMoney}`;
         }else if(dealerSum > playerSum && dealerSum < 21) {
-            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;
             playerMoney -= 25;
+            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;
             currentAmount.innerHTML = `$${playerMoney}`;
         }else if(playerSum > dealerSum && playerSum < 21) {
-            messageBoard.innerHTML = `Player Wins! Player Total: ${playerSum}`;
             playerMoney += 25;
+            messageBoard.innerHTML = `Player Wins! Player Total: ${playerSum}`;
+            currentAmount.innerHTML = `$${playerMoney}`;
         }else if (dealerSum === playerSum) {
             messageBoard.innerHTML = `Draw! Dealer Total: ${playerSum}, Player Total: ${playerSum} `;
         };
     };
 
     function addCard(card, player) {
-        
         let cardElement = document.createElement("div");
         player.appendChild(cardElement);
-        console.log(player)
         cardElement.className = 'newCards';
-        
         cardElement.style.height =`5em`;
         cardElement.style.width =`3em`;
         cardElement.style.backgroundPosition = `center`;
         cardElement.style.backgroundRepeat = `no-repeat`;
         cardElement.style.backgroundImage =`url('./playing-cards-pack/PNG/Cards\ \(large\)/${card}.png')`;
    
-
-        console.log()
     };
 
     function removeCard() {
@@ -160,10 +157,8 @@ const userElement= document.querySelector('#user-player');
         })
         
     };
-    //addCard()
 
 //EventListeners
-    
     //Start Game Button
     startGame.addEventListener('click', function() {
        
@@ -176,7 +171,7 @@ const userElement= document.querySelector('#user-player');
             playerSum = cardValue(playerCards);  //cardvalue expects an array of strings, or the updated array
             messageBoard.innerHTML = `Player Total: ${playerSum}, Dealer Total: ${dealerSum}`;
             
-            setTimeout(function(){checkWin()}, 1000); 
+            setTimeout(function(){checkWin()}, 500); 
 
         });
 
@@ -184,13 +179,12 @@ const userElement= document.querySelector('#user-player');
         stand.addEventListener('click', function() {
             messageBoard.innerHTML = `Player Total: ${playerSum}, Dealer Total: ${dealerSum}`;
             dealerMove();
-            setTimeout(function(){checkWin()}, 1000); 
+            setTimeout(function(){checkWin()}, 500); 
             
         })
         
         //Reset button
         reset.addEventListener('click', function() {
-            //console.log('howdy')
             window.location.reload();
             clicked = false;
         });
@@ -208,23 +202,17 @@ const userElement= document.querySelector('#user-player');
             playerCards = []; 
             dealerCards = [];
             
-            
             removeCard();
             dealCards(deck);
             
-            
-            //dealerCard1.innerText = dealerCards[0];
             addCard(dealerCards[0], dealerElement);
-            //dealerCard2.innerText = dealerCards[1];
             addCard(dealerCards[1], dealerElement);
-            //userCard5.innerText = playerCards[0];
             addCard(playerCards[0], userElement);
-            //userCard6.innerText = playerCards[1];
             addCard(playerCards[1], userElement);
             // messageBoard.innerHTML = `Next Round!! Player Total: ${playerSum} Dealer Total: ${dealerSum}`;
-            // console.log(messageBoard.innerHTML)
             //checkWin();
             discardShuffle(discardPile);
+            checkMoney()
             console.log(deck)
             console.log(`Discard Pile: ${discardPile}`)
             console.log(`Player Cards: ${playerCards}`)
@@ -282,10 +270,10 @@ const userElement= document.querySelector('#user-player');
         messageBoard.innerHTML = `Game Started!! Player Total: ${playerSum} Dealer Total: ${dealerSum}`;
         
         if(dealerSum === 21) {
-            setTimeout(function(){checkWin()}, 1000); 
+            setTimeout(function(){checkWin()}, 500); 
             
         }if(playerSum === 21) {
-            setTimeout(function(){checkWin()}, 1000); 
+            setTimeout(function(){checkWin()}, 500); 
             
         };
         
