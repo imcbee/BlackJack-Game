@@ -40,9 +40,9 @@ const userElement= document.querySelector('#user-player');
         for(let i =0;i<suits.length;i++) {
             for(let j=0; j<values.length; j++) {
                 playingDeck.push(`${values[j]}-${suits[i]}`);
-            }
+            };
         }; 
-        return playingDeck
+        return playingDeck;
     };
 
     //shuffle deck
@@ -166,9 +166,8 @@ const userElement= document.querySelector('#user-player');
         hit.addEventListener('click', function() {
             hitCards(deck);
             dealerMove();
-            //userCard7.innerHTML = playerCards[2];
             addCard(playerCards[2], userElement);
-            playerSum = cardValue(playerCards);  //cardvalue expects an array of strings, or the updated array
+            playerSum = cardValue(playerCards);
             messageBoard.innerHTML = `Player Total: ${playerSum}, Dealer Total: ${dealerSum}`;
             
             setTimeout(function(){checkWin()}, 500); 
@@ -209,10 +208,10 @@ const userElement= document.querySelector('#user-player');
             addCard(dealerCards[1], dealerElement);
             addCard(playerCards[0], userElement);
             addCard(playerCards[1], userElement);
-            // messageBoard.innerHTML = `Next Round!! Player Total: ${playerSum} Dealer Total: ${dealerSum}`;
-            //checkWin();
+            
             discardShuffle(discardPile);
-            checkMoney()
+            checkMoney();
+            
             console.log(deck)
             console.log(`Discard Pile: ${discardPile}`)
             console.log(`Player Cards: ${playerCards}`)
@@ -222,10 +221,10 @@ const userElement= document.querySelector('#user-player');
         //dealer move
         function dealerMove() {
             dealToDealer(deck);
-            //dealerCard3.innerHTML = dealerCards[2];
             if(!dealer17) {
                 addCard(dealerCards[2], dealerElement);
-            }
+                dealer17--;
+            };
             
             dealerSum = cardValue(dealerCards);
         };
@@ -239,8 +238,6 @@ const userElement= document.querySelector('#user-player');
                 arr.pop()
             };
         
-            // console.log(deck)
-            // console.log(discardPile)
         };
     
         clicked = true;
@@ -248,7 +245,7 @@ const userElement= document.querySelector('#user-player');
             startGame.disabled = true;
         }else {
             startGame.disabled = false;
-        }
+        };
 
         playerMoney = 500;
         currentAmount.innerHTML = `$${playerMoney}`;
@@ -256,13 +253,9 @@ const userElement= document.querySelector('#user-player');
         shuffleDeck(deck);
         dealCards(deck);
         
-        //dealerCard1.innerHTML = dealerCards[0];
         addCard(dealerCards[0], dealerElement);
-        //dealerCard2.innerHTML = dealerCards[1];
         addCard(dealerCards[1], dealerElement);
-        //userCard5.innerHTML = playerCards[0];
         addCard(playerCards[0], userElement);
-        //userCard6.innerHTML = playerCards[1];
         addCard(playerCards[1], userElement);     
 
         playerSum += cardValue(playerCards);

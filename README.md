@@ -1,7 +1,9 @@
 # BlackJack-Game
 ## []Description
 
-BlackJack-Game is a casino game 
+BlackJack-Game, also known as 21, is a casino game where the player plays against the house dealer in scoring a combination of cards
+
+
 Gotchi Buddy is an interactive, ‘tomagotchi-esque’ game which allows you to name a tomagotchi and take care of it. This was the first thing I ever built.
 
 ### []The tech stack:
