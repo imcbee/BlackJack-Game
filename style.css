@@ -1,3 +1,9 @@
+*,*::after, *::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
 body{
     display: flex;
     justify-self: center;
@@ -36,7 +42,15 @@ div{
     width: 20em;
     height: 5em;
 }
+.console {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid green;
 
+
+}
 .button-message-container{
     display: flex;
     flex-direction: row;
@@ -60,4 +74,10 @@ div{
     flex-direction: row;
     width: 12em;
     height: 3em;
+}
+.money{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

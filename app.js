@@ -1,12 +1,12 @@
 
-
-let playerCards = [],dealerCards = [],clicked= false, currentIndex = 0;
-let playerSum =0, dealerSum =0;
+//Global Variables
+let playerCards = [];
+let dealerCards = [];
+let clicked= false;
+let playerSum =0;
+let dealerSum =0;
 let playerMoney = 0;
 let discardPile = [];
-
-
-
 
 
 //DOM Variables
@@ -25,9 +25,11 @@ const dealerCard2 = document.querySelector('#card2');
 const dealerCard3 = document.querySelector('#card3');
 const dealerCard4 = document.querySelector('#card4');
 const messageBoard = document.querySelector('#message-board-container');
+const currentAmount = document.querySelector('#current-amount');
+const dealerElement= document.querySelector('#dealer-container');
+const userElement= document.querySelector('#user-player');
 
-
-//Functions
+//Global Functions
 
     //build Deck
     function buildDeck() {
@@ -39,54 +41,38 @@ const messageBoard = document.querySelector('#message-board-container');
             for(let j=0; j<values.length; j++) {
                 playingDeck.push(`${values[j]}-${suits[i]}`);
             }
-        } 
+        }; 
         return playingDeck
     };
 
     //shuffle deck
     function shuffleDeck(arr) {
         arr.sort(() => 0.5 - Math.random());
-        
-        //ret;urn arr
-    }
-
-    
+    };
 
     //deal cards
     function dealCards(arr) {
         playerCards.push((arr.shift()));
-        currentIndex++;
         dealerCards.push((arr.shift()));
-        currentIndex++;
         playerCards.push((arr.shift()));
-        currentIndex++;
         dealerCards.push((arr.shift()));
-        currentIndex++;  
+          
     };
 
     //hit cards for player
     function hitCards(arr) {
-        playerCards.push((arr.shift()))
-        currentIndex++
-        
+        playerCards.push((arr.shift()));      
     };
 
-    
-   
-    
-
+    let dealer17 = 0
     //deal to dealer
     function dealToDealer(arr) {  //could be area of trouble, currentindex for later figuringout
+        dealerSum <= 17 ? dealerCards.push((arr.shift())) : dealer17++; 
         
-        if(dealerSum <= 17) {
-            dealerCards.push((arr.shift()))
-            //console.log(arr[5])
-            currentIndex++
-        }if(dealerSum > 17) {
-            
-        }
         
-    }
+        // console.log(dealerCard3)
+        // console.log(dealerCards)
+    };
 
     //get value of card
     function cardValue(arr) {
@@ -100,174 +86,207 @@ const messageBoard = document.querySelector('#message-board-container');
         
         for(let i=0; i<cardValue.length; i++) {
             if(cardValue[i] === "J" || cardValue[i] === "Q" || cardValue[i] === "K") {
-                cardValue[i] = "10"
+                cardValue[i] = "10";
             };
             if(cardValue[i] === "A") {
-                cardValue[i] = "11"
+                cardValue[i] = "11";
             };
         };
         let num = cardValue.map(str => {return Number(str)});
 
         for(let i=0;i<num.length;i++){
-            sumOfArr += num[i]
+            sumOfArr += num[i];
         };
 
-        return sumOfArr
+        return sumOfArr;
     };
 
-    //console.log(cardValue(["5-S","10-H","K-S"]))
-    // console.log(randomCard(playingCards))
-    // console.log(playerCards)
-    //console.log(playerCards)
+    //check player's money amount
+    function checkMoney() {
+        if(playerMoney === 0) {
+            messageBoard.innerHTML = `NO MORE MONEY! $${playerMoney}.`
+            setTimeout(function(){window.location.reload()},10000)
+        };
+    };
 
+    
     //Win Evaulation
     function checkWin() {
         if(dealerSum === 21) {
-            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`
+            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;
+            playerMoney -= 25;
+            currentAmount.innerHTML = `$${playerMoney}`;
         }else if(playerSum === 21) {
-            messageBoard.innerHTML = `Player Wins! Player Total: ${playerSum}`
+            messageBoard.innerHTML = `Player Wins! Player Total: ${playerSum}`;
+            playerMoney += 25;
+            currentAmount.innerHTML = `$${playerMoney}`;
         }else if(playerSum > 21) {
-            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`
+            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;
+            playerMoney -= 25;
+            currentAmount.innerHTML = `$${playerMoney}`;
         }else if(dealerSum > playerSum && dealerSum < 21) {
-            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`
+            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;
+            playerMoney -= 25;
+            currentAmount.innerHTML = `$${playerMoney}`;
         }else if(playerSum > dealerSum && playerSum < 21) {
-            messageBoard.innerHTML = `Player Wins! Player Total: ${playerSum}`
+            messageBoard.innerHTML = `Player Wins! Player Total: ${playerSum}`;
+            playerMoney += 25;
         }else if (dealerSum === playerSum) {
-            messageBoard.innerHTML = `Draw! Dealer Total: ${playerSum}, Player Total: ${playerSum} `
-        }
-    }
+            messageBoard.innerHTML = `Draw! Dealer Total: ${playerSum}, Player Total: ${playerSum} `;
+        };
+    };
 
+    function addCard(card, player) {
+        
+        let cardElement = document.createElement("div");
+        player.appendChild(cardElement);
+        console.log(player)
+        cardElement.className = 'newCards';
+        
+        cardElement.style.height =`5em`;
+        cardElement.style.width =`3em`;
+        cardElement.style.backgroundPosition = `center`;
+        cardElement.style.backgroundRepeat = `no-repeat`;
+        cardElement.style.backgroundImage =`url('./playing-cards-pack/PNG/Cards\ \(large\)/${card}.png')`;
+   
+
+        console.log()
+    };
+
+    function removeCard() {
+        let removeCards = document.querySelectorAll('.newCards');
+        removeCards.forEach((card)=>{
+            card.remove();
+        })
+        
+    };
+    //addCard()
 
 //EventListeners
-
-
-
-bet.addEventListener('click', function() {
-        console.log('what')
-    });
-
-
-
-startGame.addEventListener('click', function() {
     
-    
-    hit.addEventListener('click', function() {
-        hitCards(deck);
-        dealerMove();
-        userCard7.innerHTML = playerCards[2];
-        playerSum = cardValue(playerCards)  //cardvalue expects an array of strings, or the updated array
-        messageBoard.innerHTML = `Player Total: ${playerSum}`;
-        checkWin(); 
+    //Start Game Button
+    startGame.addEventListener('click', function() {
+       
+        //Hit Button
+        hit.addEventListener('click', function() {
+            hitCards(deck);
+            dealerMove();
+            //userCard7.innerHTML = playerCards[2];
+            addCard(playerCards[2], userElement);
+            playerSum = cardValue(playerCards);  //cardvalue expects an array of strings, or the updated array
+            messageBoard.innerHTML = `Player Total: ${playerSum}, Dealer Total: ${dealerSum}`;
+            
+            setTimeout(function(){checkWin()}, 1000); 
 
+        });
 
-        // console.log(`Dealer: ${dealerSum}`)
-        // console.log(`player: ${playerSum}`)
-        //console.log(playerCards)
-        //console.log(currentIndex)
-    });
-
-    stand.addEventListener('click', function() {
-        dealerMove();
-        checkWin();
+        //Stand button
+        stand.addEventListener('click', function() {
+            messageBoard.innerHTML = `Player Total: ${playerSum}, Dealer Total: ${dealerSum}`;
+            dealerMove();
+            setTimeout(function(){checkWin()}, 1000); 
+            
+        })
         
-        
-        
-        // console.log(`Dealer: ${dealerSum}`)
-        // console.log(`player: ${playerSum}`)
-    })
-    //playerCards.push(deck[0])
-    
-    reset.addEventListener('click', function() {
-        //console.log('howdy')
-        if(clicked){window.location.reload();}
-        clicked = false;
-    });
+        //Reset button
+        reset.addEventListener('click', function() {
+            //console.log('howdy')
+            window.location.reload();
+            clicked = false;
+        });
 
-    nextRound.addEventListener('click', function() {
-        //discardPile = playerCards.concat(dealerCards);
-        for(let i =0;i<playerCards.length;i++) {
-            discardPile.push(playerCards[i])
+        //Next Round Button
+        nextRound.addEventListener('click', function() {
+            for(let i =0;i<playerCards.length;i++) {
+                discardPile.push(playerCards[i]);
+            };
+            for(let i =0;i<dealerCards.length;i++) {
+                discardPile.push(dealerCards[i]);
+            };
+
+            messageBoard.innerHTML = `Select Hit or Stand.`
+            playerCards = []; 
+            dealerCards = [];
+            
+            
+            removeCard();
+            dealCards(deck);
+            
+            
+            //dealerCard1.innerText = dealerCards[0];
+            addCard(dealerCards[0], dealerElement);
+            //dealerCard2.innerText = dealerCards[1];
+            addCard(dealerCards[1], dealerElement);
+            //userCard5.innerText = playerCards[0];
+            addCard(playerCards[0], userElement);
+            //userCard6.innerText = playerCards[1];
+            addCard(playerCards[1], userElement);
+            // messageBoard.innerHTML = `Next Round!! Player Total: ${playerSum} Dealer Total: ${dealerSum}`;
+            // console.log(messageBoard.innerHTML)
+            //checkWin();
+            discardShuffle(discardPile);
+            console.log(deck)
+            console.log(`Discard Pile: ${discardPile}`)
+            console.log(`Player Cards: ${playerCards}`)
+            
+        })
+        
+        //dealer move
+        function dealerMove() {
+            dealToDealer(deck);
+            //dealerCard3.innerHTML = dealerCards[2];
+            if(!dealer17) {
+                addCard(dealerCards[2], dealerElement);
+            }
+            
+            dealerSum = cardValue(dealerCards);
         };
-        for(let i =0;i<dealerCards.length;i++) {
-            discardPile.push(dealerCards[i])
-        };
 
-        playerCards = []; 
-        dealerCards = [];
-        dealerCard1.innerHTML = "";
-        dealerCard2.innerHTML = "";
-        dealerCard3.innerHTML = "";
-        dealerCard4.innerHTML = "";
-        userCard5.innerHTML = "";
-        userCard6.innerHTML = "";
-        userCard7.innerHTML = "";
-        userCard8.innerHTML = "";
+        //discard shuffle
+        function discardShuffle(arr) {
+            shuffleDeck(arr);
+            
+            while(arr.length > 25) {
+                deck.push(arr[arr.length-1]);
+                arr.pop()
+            };
+        
+            // console.log(deck)
+            // console.log(discardPile)
+        };
+    
+        clicked = true;
+        if(clicked === true) {
+            startGame.disabled = true;
+        }else {
+            startGame.disabled = false;
+        }
+
+        playerMoney = 500;
+        currentAmount.innerHTML = `$${playerMoney}`;
+        let deck = buildDeck();
+        shuffleDeck(deck);
         dealCards(deck);
         
-        dealerCard1.innerText = dealerCards[0]
-        dealerCard2.innerText = dealerCards[1]
-        userCard5.innerText = playerCards[0]
-        userCard6.innerText = playerCards[1]
+        //dealerCard1.innerHTML = dealerCards[0];
+        addCard(dealerCards[0], dealerElement);
+        //dealerCard2.innerHTML = dealerCards[1];
+        addCard(dealerCards[1], dealerElement);
+        //userCard5.innerHTML = playerCards[0];
+        addCard(playerCards[0], userElement);
+        //userCard6.innerHTML = playerCards[1];
+        addCard(playerCards[1], userElement);     
 
-        checkWin();
-        discardShuffle(discardPile);
-        //console.log(playerCards, dealerCards);
-        // console.log(deck)
-        // console.log(discardPile)
-    })
-    
-    //dealer move
-    function dealerMove() {
-        dealToDealer(deck)
-        dealerCard3.innerHTML = dealerCards[2];
-        dealerSum = cardValue(dealerCards)
-    };
-
-    //discard shuffle
-    function discardShuffle(arr) {
-        shuffleDeck(arr);
+        playerSum += cardValue(playerCards);
+        dealerSum += cardValue(dealerCards);
+        messageBoard.innerHTML = `Game Started!! Player Total: ${playerSum} Dealer Total: ${dealerSum}`;
         
-        while(arr.length > 25) {
-            deck.push(arr[arr.length-1]);
-            arr.pop()
+        if(dealerSum === 21) {
+            setTimeout(function(){checkWin()}, 1000); 
+            
+        }if(playerSum === 21) {
+            setTimeout(function(){checkWin()}, 1000); 
+            
         };
-       
-        console.log(deck)
-        console.log(discardPile)
-    };
-   
-    clicked = true;
-    let deck = buildDeck();
-    //console.log(deck)
-    shuffleDeck(deck);
-    //console.log(deck)
-    dealCards(deck)
-    
-    dealerCard1.innerHTML = dealerCards[0]
-    dealerCard2.innerHTML = dealerCards[1]
-    userCard5.innerHTML = playerCards[0]
-    userCard6.innerHTML = playerCards[1]
-    //console.log(userCard5.innerHTML)
-    
-
-    playerSum += cardValue(playerCards)
-    dealerSum += cardValue(dealerCards)
-    messageBoard.innerHTML = `Game Started!! Player Total: ${playerSum} Dealer Total: ${dealerSum}`
-     
-    if(dealerSum === 21) {
-        checkWin();
-        clicked = false;
-    }if(playerSum === 21) {
-        checkWin();
-        clicked = false;
-    };
-    
-    
-    
-    
-    // console.log(`Dealer: ${dealerSum}`)
-    // console.log(`player: ${playerSum}`)
-    //console.log(currentIndex)
-    //console.log(dealerCards)
-    
-});
+        
+    });
