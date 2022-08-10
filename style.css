@@ -58,6 +58,6 @@ div{
 .bet-hit-stand{
     display: flex;
     flex-direction: row;
-    width: 8em;
+    width: 12em;
     height: 3em;
 }
