@@ -161,16 +161,17 @@ const userElement= document.querySelector('#user-player');
         let cardElement = document.createElement("div");
         player.appendChild(cardElement);
         cardElement.className = 'newCards';
-        cardElement.style.height =`5em`;
-        cardElement.style.width =`3em`;
+        cardElement.style.height =`6em`;
+        cardElement.style.width =`4em`;
         cardElement.style.backgroundPosition = `center`;
         cardElement.style.backgroundRepeat = `no-repeat`;
+        cardElement.style.backgroundSize= `cover`;
         cardElement.style.backgroundImage =`url('./playing-cards-pack/PNG/Cards\ \(large\)/${card}.png')`;
    
     };
 
     //Removes unactive card element in the DOM
-    function removeCard() {       //you can actually just select the containers(innerhtml) them selfs and set to an empty string
+    function removeCard() {       
         let removeCards = document.querySelectorAll('.newCards');
         removeCards.forEach((card)=>{
             card.remove();
@@ -186,7 +187,7 @@ const userElement= document.querySelector('#user-player');
         //Allows player and dealer to 'hit' cards in play
         hit.addEventListener('click', function() {          
             hitCards(deck);
-            dealerMove();
+            setTimeout(()=>{dealerMove()},1000);
             addCard(playerCards[2], userElement);
             playerSum = cardValue(playerCards);
             messageBoard.innerHTML = `Player Total: ${playerSum}, Dealer Total: ${dealerSum}`;
@@ -197,7 +198,7 @@ const userElement= document.querySelector('#user-player');
         //Allows player and dealer to not to 'hit' cards during the game
         stand.addEventListener('click', function() {
             messageBoard.innerHTML = `Player Total: ${playerSum}, Dealer Total: ${dealerSum}`;
-            dealerMove();
+            setTimeout(()=>{dealerMove()},1000);
             playerSum = cardValue(playerCards);
             //console.log(playerSum)
             checkWin(true);
@@ -252,12 +253,12 @@ const userElement= document.querySelector('#user-player');
         //Allows the dealer to add an active card
         function dealerMove() {
             
-            if(dealerSum <= 17){
+            if(dealerSum < 17){
                 dealerCards.push((deck.shift()));
                 addCard(dealerCards[2], dealerElement);
             };
             dealerSum = cardValue(dealerCards);
-            //console.log(dealerSum)
+            console.log(dealerSum)
         };
      
     
