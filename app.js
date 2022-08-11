@@ -31,7 +31,7 @@ const userElement= document.querySelector('#user-player');
 
 //Global Functions
 
-    //build Deck
+    //Builds a functional 52 card deck. 
     function buildDeck() {
         const suits = ['C', 'S', 'H', 'D'];
         const values = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
@@ -45,12 +45,12 @@ const userElement= document.querySelector('#user-player');
         return playingDeck;
     };
 
-    //shuffle deck
+    //Shuffles deck.
     function shuffleDeck(arr) {
         arr.sort(() => 0.5 - Math.random());
     };
 
-    //deal cards
+    //Start game cards that are dealt to player's and dealer's card array.
     function dealCards(arr) {
         playerCards.push((arr.shift()));
         dealerCards.push((arr.shift()));
@@ -59,19 +59,16 @@ const userElement= document.querySelector('#user-player');
           
     };
 
-    //hit cards for player
+    //Add card to player's card array
     function hitCards(arr) {
         playerCards.push((arr.shift()));      
     };
 
     
-    //deal to dealer
-    function dealToDealer(arr) { 
-        dealerSum <= 17 ? dealerCards.push((arr.shift())) : dealer17++; 
-    };
+    
 
-    //get value of card
-    function cardValue(arr) {
+    //Return value of player's or dealer's cards
+    function cardValue(arr) {  // could have done in one pass
         let cardValue = [];
         let sumOfArr = 0;
         
@@ -97,47 +94,69 @@ const userElement= document.querySelector('#user-player');
         return sumOfArr;
     };
 
-    //check player's money amount
+    //Checks monetary amount of player's money
     function checkMoney() {
-        if(player === 25) {
-            messageBoard.innerHTML = `WARNIGN: Money is low! $${playerMoney}.`
+        if(playerMoney === 25) {
+            messageBoard.innerHTML = `WARNING: Money is low! $${playerMoney}.`;
         };
         if(playerMoney === 0 || playerMoney < 0) {
-            messageBoard.innerHTML = `NO MORE MONEY! $${playerMoney}.`
-            hit.disabled =true;
-            stand.disabled =true;
-            setTimeout(function(){window.location.reload()},3000)
+            messageBoard.innerHTML = `NO MORE MONEY! $${playerMoney}. Go Home and hit reset.`;
+            hit.disabled = true;
+            stand.disabled = true;
+            nextRound.disabled = true;
+            
         };
     };
 
-    
-    //Win Evaulation
-    function checkWin() {
+    //Check whether player or dealer wins during round
+    function checkWin(gameIsOver=false) {
         if(dealerSum === 21) {
             playerMoney -= 25;
             messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;            
             currentAmount.innerHTML = `$${playerMoney}`;
+            nextRound.disabled = false;
+            hit.disabled = true;
+            stand.disabled = true;
         }else if(playerSum === 21) {
             playerMoney += 25;
             messageBoard.innerHTML = `Player Wins! Player Total: ${playerSum}`;
             currentAmount.innerHTML = `$${playerMoney}`;
-        }else if(playerSum > 21) {
-            playerMoney -= 25;
-            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;            
-            currentAmount.innerHTML = `$${playerMoney}`;
-        }else if(dealerSum > playerSum && dealerSum < 21) {
-            playerMoney -= 25;
-            messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;
-            currentAmount.innerHTML = `$${playerMoney}`;
-        }else if(playerSum > dealerSum && playerSum < 21) {
-            playerMoney += 25;
-            messageBoard.innerHTML = `Player Wins! Player Total: ${playerSum}`;
-            currentAmount.innerHTML = `$${playerMoney}`;
-        }else if (dealerSum === playerSum) {
-            messageBoard.innerHTML = `Draw! Dealer Total: ${playerSum}, Player Total: ${playerSum} `;
+            nextRound.disabled = false;
+            hit.disabled = true;
+            stand.disabled = true;
+        };
+        if(gameIsOver){
+            if(playerSum > 21) {
+                playerMoney -= 25;
+                messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;            
+                currentAmount.innerHTML = `$${playerMoney}`;
+                nextRound.disabled = false;
+                hit.disabled = true;
+                stand.disabled = true;
+            }else if(dealerSum > playerSum && dealerSum < 21) {
+                playerMoney -= 25;
+                messageBoard.innerHTML = `Dealer Wins! Dealer Total: ${dealerSum}`;
+                currentAmount.innerHTML = `$${playerMoney}`;
+                nextRound.disabled = false;
+                hit.disabled = true;
+                stand.disabled = true;
+            }else if(playerSum < dealerSum && playerSum < 21) {
+                playerMoney += 25;
+                messageBoard.innerHTML = `Player Wins! Player Total: ${playerSum}`;
+                currentAmount.innerHTML = `$${playerMoney}`;
+                nextRound.disabled = false;
+                hit.disabled = true;
+                stand.disabled = true;
+            }else if (dealerSum === playerSum) {
+                messageBoard.innerHTML = `Draw! Dealer Total: ${playerSum}, Player Total: ${playerSum} `;
+                nextRound.disabled = false;
+                hit.disabled = true;
+                stand.disabled = true;
+            };
         };
     };
 
+    //Adds active card element in the DOM
     function addCard(card, player) {
         let cardElement = document.createElement("div");
         player.appendChild(cardElement);
@@ -150,54 +169,66 @@ const userElement= document.querySelector('#user-player');
    
     };
 
-    function removeCard() {
+    //Removes unactive card element in the DOM
+    function removeCard() {       //you can actually just select the containers(innerhtml) them selfs and set to an empty string
         let removeCards = document.querySelectorAll('.newCards');
         removeCards.forEach((card)=>{
             card.remove();
-        })
+        });
         
     };
 
 //EventListeners
-    //Start Game Button
+
+    //Commences black game and allows game functionality
     startGame.addEventListener('click', function() {
        
-        //Hit Button
+        //Allows player and dealer to 'hit' cards in play
         hit.addEventListener('click', function() {
+            
+            
             hitCards(deck);
             dealerMove();
             addCard(playerCards[2], userElement);
             playerSum = cardValue(playerCards);
             messageBoard.innerHTML = `Player Total: ${playerSum}, Dealer Total: ${dealerSum}`;
             
-            setTimeout(function(){checkWin()}, 500); 
+            checkWin(true);
 
         });
 
-        //Stand button
+        //Allows player and dealer to not to 'hit' cards during the game
         stand.addEventListener('click', function() {
+            
+            
             messageBoard.innerHTML = `Player Total: ${playerSum}, Dealer Total: ${dealerSum}`;
             dealerMove();
-            setTimeout(function(){checkWin()}, 500); 
+            playerSum = cardValue(playerCards);
+            console.log(playerSum)
+            checkWin(true);
             
         })
         
-        //Reset button
+        //Resets the game by refreshing
         reset.addEventListener('click', function() {
             window.location.reload();
-            clicked = false;
+            
         });
 
-        //Next Round Button
+        //Commences next cycle of the game and evaulates win and monetary conditions
         nextRound.addEventListener('click', function() {
-            for(let i =0;i<playerCards.length;i++) {
+            hit.disabled = false;
+            stand.disabled = false;
+            nextRound.disabled = true;            
+            checkMoney();
+            for(let i =0;i<playerCards.length;i++) {  // just resetting the deck and hands will be easier
                 discardPile.push(playerCards[i]);
             };
             for(let i =0;i<dealerCards.length;i++) {
                 discardPile.push(dealerCards[i]);
             };
 
-            messageBoard.innerHTML = `Select Hit or Stand.`
+            messageBoard.innerHTML = `Select Hit or Stand.`;
             playerCards = []; 
             dealerCards = [];
             
@@ -209,27 +240,36 @@ const userElement= document.querySelector('#user-player');
             addCard(playerCards[0], userElement);
             addCard(playerCards[1], userElement);
             
+            playerSum = cardValue(playerCards);
+            dealerSum = cardValue(dealerCards);
+
+            checkWin();
+            
+
             discardShuffle(discardPile);
-            checkMoney();
+            
             
             console.log(deck)
             console.log(`Discard Pile: ${discardPile}`)
             console.log(`Player Cards: ${playerCards}`)
+            console.log(`Dealer Cards: ${dealerCards}`)
             
         })
         
-        //dealer move
+        //Allows the dealer to add an active card
         function dealerMove() {
-            dealToDealer(deck);
-            if(!dealer17) {
+            
+            if(dealerSum <= 17){
+                dealerCards.push((deck.shift()));
                 addCard(dealerCards[2], dealerElement);
-                dealer17--;
             };
             
             dealerSum = cardValue(dealerCards);
         };
+     
+    
 
-        //discard shuffle
+        //Shuffels and pushes unactive cards back into the active deck
         function discardShuffle(arr) {
             shuffleDeck(arr);
             
@@ -241,12 +281,8 @@ const userElement= document.querySelector('#user-player');
         };
     
         clicked = true;
-        if(clicked === true) {
-            startGame.disabled = true;
-        }else {
-            startGame.disabled = false;
-        };
-
+        startGame.disabled = true;
+        nextRound.disabled = true;
         playerMoney = 500;
         currentAmount.innerHTML = `$${playerMoney}`;
         let deck = buildDeck();
@@ -258,16 +294,11 @@ const userElement= document.querySelector('#user-player');
         addCard(playerCards[0], userElement);
         addCard(playerCards[1], userElement);     
 
-        playerSum += cardValue(playerCards);
-        dealerSum += cardValue(dealerCards);
+        playerSum = cardValue(playerCards);
+        dealerSum = cardValue(dealerCards);
         messageBoard.innerHTML = `Game Started!! Player Total: ${playerSum} Dealer Total: ${dealerSum}`;
         
-        if(dealerSum === 21) {
-            setTimeout(function(){checkWin()}, 500); 
-            
-        }if(playerSum === 21) {
-            setTimeout(function(){checkWin()}, 500); 
-            
-        };
+        checkWin(); 
+        
         
     });
