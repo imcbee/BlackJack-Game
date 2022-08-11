@@ -68,7 +68,7 @@ const userElement = document.querySelector('#user-player');
     
 
     //Return value of player's or dealer's cards
-    function cardValue(arr) {  // could have done in one pass
+    function cardValue(arr) { 
         let cardValue = [];
         let sumOfArr = 0;
         
@@ -200,7 +200,6 @@ const userElement = document.querySelector('#user-player');
             messageBoard.innerHTML = `Dealer Total: ${dealerSum}, Player Total: ${playerSum}.`;
             setTimeout(()=>{dealerMove()},1000);
             playerSum = cardValue(playerCards);
-            //console.log(playerSum)
             checkWin(true);
         })
         
@@ -215,7 +214,7 @@ const userElement = document.querySelector('#user-player');
             stand.disabled = false;
             nextRound.disabled = true;            
             checkMoney();
-            for(let i =0;i<playerCards.length;i++) {  // just resetting the deck and hands will be easier
+            for(let i =0;i<playerCards.length;i++) { 
                 discardPile.push(playerCards[i]);
             };
             for(let i =0;i<dealerCards.length;i++) {
@@ -228,26 +227,17 @@ const userElement = document.querySelector('#user-player');
             
             removeCard();
             dealCards(deck);
-            
+    
             addCard(dealerCards[0], dealerElement);
             addCard(dealerCards[1], dealerElement);
             addCard(playerCards[0], userElement);
             addCard(playerCards[1], userElement);
-            
+
             playerSum = cardValue(playerCards);
             dealerSum = cardValue(dealerCards);
 
             checkWin();
-            
-
             discardShuffle(discardPile);
-            
-            
-            // console.log(deck)
-            // console.log(`Discard Pile: ${discardPile}`)
-            // console.log(`Player Cards: ${playerCards}`)
-            // console.log(`Dealer Cards: ${dealerCards}`)
-            
         })
         
         //Allows the dealer to add an active card
