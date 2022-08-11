@@ -5,18 +5,18 @@ Black Jack, also known as 21, is a casino game where the player competes against
 
 ## Goals and Stretch Goals:
 
-###Goals:
+### Goals:
 1. Build a functional card deck stored as an array.
 2. Render card elements through DOM manipulation from the deck array.
 3. Player could make the decision to hit or stand.
 4. Implement a monetary system to keep track of wins or loses and give player motivation.
 
-###Stretch Goals:
+### Stretch Goals:
 1. Implement an Ace split function to allow more real-life game rules.
 2. Implement a 2 player AIs to play alongside with the user.
 3. Implement a 3:2 pay-out for 21 or black jack wins.
 
-###Wire Frame:
+### Wire Frame:
 ![BlackJack Game WireFrame](https://user-images.githubusercontent.com/107007458/184252443-9073c99d-e308-41e2-8d8b-eda1f502b72d.jpeg)
 
 This picture shows the original wire frame design for the black jack game during the planning phase.
