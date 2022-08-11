@@ -24,9 +24,6 @@ body{
     
 
 }
-div{
-    /* border: 1px solid red; */
-}
 img{
     height: 100%;
     width: 100%;
@@ -101,7 +98,7 @@ button{
     border: 1px solid goldenrod;
     justify-content: left;
     align-items: center;
-    padding: 8px;
+    padding: 9px;
     font-size: 20px;
     grid-row: 4;
     /* margin: auto; */
