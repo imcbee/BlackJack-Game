@@ -27,7 +27,7 @@ const dealerCard4 = document.querySelector('#card4');
 const messageBoard = document.querySelector('#message-board-container');
 const currentAmount = document.querySelector('#current-amount');
 const dealerElement= document.querySelector('#dealer-container');
-const userElement= document.querySelector('#user-player');
+const userElement = document.querySelector('#user-player');
 
 //Global Functions
 
@@ -161,8 +161,8 @@ const userElement= document.querySelector('#user-player');
         let cardElement = document.createElement("div");
         player.appendChild(cardElement);
         cardElement.className = 'newCards';
-        cardElement.style.height =`6em`;
-        cardElement.style.width =`4em`;
+        cardElement.style.height =`8em`;
+        cardElement.style.width =`6em`;
         cardElement.style.backgroundPosition = `center`;
         cardElement.style.backgroundRepeat = `no-repeat`;
         cardElement.style.backgroundSize= `cover`;
@@ -190,14 +190,14 @@ const userElement= document.querySelector('#user-player');
             setTimeout(()=>{dealerMove()},1000);
             addCard(playerCards[2], userElement);
             playerSum = cardValue(playerCards);
-            messageBoard.innerHTML = `Player Total: ${playerSum}, Dealer Total: ${dealerSum}`;
+            messageBoard.innerHTML = `Dealer Total: ${dealerSum}, Player Total: ${playerSum}.`;
             checkWin(true);
 
         });
 
         //Allows player and dealer to not to 'hit' cards during the game
         stand.addEventListener('click', function() {
-            messageBoard.innerHTML = `Player Total: ${playerSum}, Dealer Total: ${dealerSum}`;
+            messageBoard.innerHTML = `Dealer Total: ${dealerSum}, Player Total: ${playerSum}.`;
             setTimeout(()=>{dealerMove()},1000);
             playerSum = cardValue(playerCards);
             //console.log(playerSum)
@@ -289,7 +289,7 @@ const userElement= document.querySelector('#user-player');
 
         playerSum = cardValue(playerCards);
         dealerSum = cardValue(dealerCards);
-        messageBoard.innerHTML = `Game Started!! Player Total: ${playerSum} Dealer Total: ${dealerSum}`;
+        messageBoard.innerHTML = `Game Started!! Dealer Total: ${dealerSum}, Player Total: ${playerSum}.`;
         
         checkWin(); 
         

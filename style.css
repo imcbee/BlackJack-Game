@@ -8,6 +8,8 @@ html{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    padding: 0;
     
     
 }
@@ -15,8 +17,12 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: black;
+    background-color: #161615;
     color: goldenrod;
+    text-shadow: -1px -1px 0 #161615, 1px -1px 0 #161615, -1px 1px 0 #161615, 1px 1px 0 #161615;
+    padding: 20px;
+    
+
 }
 div{
     /* border: 1px solid red; */
@@ -28,7 +34,9 @@ img{
 button{
     color: goldenrod;
     background-color: rgb(46, 99, 70);
-    border: ;
+    text-shadow: -1px -1px 0 #161615, 1px -1px 0 #161615, -1px 1px 0 #161615, 1px 1px 0 #161615;
+    font-size: 20px;
+    padding: 2px;
 }
 .gameboard-container{
     width: 45em;
@@ -38,10 +46,12 @@ button{
     justify-content: center;
     align-items: center;
     display: grid;
+    grid-template-rows: 10em 10em 10em 10em;
+    grid-template-columns: 1fr;
     place-items: center;
     border-radius: 40%;
     background-color: rgb(46, 99, 70);
-    border: 1px solid goldenrod;
+    border: 3px solid goldenrod;
     background-image: url("https://us.123rf.com/450wm/yamabikay/yamabikay1705/yamabikay170500039/77519356-green-felt-texture-for-poker-an-casino-theme-seamless-square-background-tile-ready-high-resolution-p.jpg?ver=6");
     background-position: center;
     background-repeat: no-repeat;
@@ -57,8 +67,8 @@ button{
     align-items: center;
     width: 20em;
     height: 5em;
-  
     gap: 5px;
+    margin-top: 5em;
 }
 .user-player{
     display: flex;
@@ -68,13 +78,13 @@ button{
     width: 20em;
     height: 5em;
     gap: 5px;
+    margin-top: 5em;
 }
 .console {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
     text-align: center;
 
 
@@ -89,9 +99,15 @@ button{
     display: flex;
     flex-direction: row;
     border: 1px solid goldenrod;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
-    padding: 10px;
+    padding: 8px;
+    font-size: 20px;
+    grid-row: 4;
+    /* margin: auto; */
+    height: 4em;
+    width: 25em;
+    gap: 5px;
     
 }
 .start-end-container {
@@ -99,21 +115,31 @@ button{
     flex-direction: column;
     width: 8em;
     height: 3em;
+    gap: 3px;
     
 }
 .bet-hit-stand{
     display: flex;
     flex-direction: row;
     width: 8em;
-    height: 3em;
+    height: 3.075em;
+    gap: 5px;
 }
 .money{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 5px;
+    padding-left: 45px;
 }
 .message-header{
     background-color: rgb(46, 99, 70);
     border: 1px solid goldenrod;
+    font-size: 20px;
+    height: 4em;
+    width: 25em;
+    padding: 5px;
+    grid-row: 3;
+    margin-top: 4em;
 }
