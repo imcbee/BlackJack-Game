@@ -7,7 +7,7 @@ let playerSum =0;
 let dealerSum =0;
 let playerMoney = 0;
 let discardPile = [];
-let dealer17 = 0;
+
 
 //DOM Variables
 const startGame = document.querySelector('#start-game');
@@ -184,35 +184,28 @@ const userElement= document.querySelector('#user-player');
     startGame.addEventListener('click', function() {
        
         //Allows player and dealer to 'hit' cards in play
-        hit.addEventListener('click', function() {
-            
-            
+        hit.addEventListener('click', function() {          
             hitCards(deck);
             dealerMove();
             addCard(playerCards[2], userElement);
             playerSum = cardValue(playerCards);
             messageBoard.innerHTML = `Player Total: ${playerSum}, Dealer Total: ${dealerSum}`;
-            
             checkWin(true);
 
         });
 
         //Allows player and dealer to not to 'hit' cards during the game
         stand.addEventListener('click', function() {
-            
-            
             messageBoard.innerHTML = `Player Total: ${playerSum}, Dealer Total: ${dealerSum}`;
             dealerMove();
             playerSum = cardValue(playerCards);
-            console.log(playerSum)
+            //console.log(playerSum)
             checkWin(true);
-            
         })
         
         //Resets the game by refreshing
         reset.addEventListener('click', function() {
             window.location.reload();
-            
         });
 
         //Commences next cycle of the game and evaulates win and monetary conditions
@@ -249,10 +242,10 @@ const userElement= document.querySelector('#user-player');
             discardShuffle(discardPile);
             
             
-            console.log(deck)
-            console.log(`Discard Pile: ${discardPile}`)
-            console.log(`Player Cards: ${playerCards}`)
-            console.log(`Dealer Cards: ${dealerCards}`)
+            // console.log(deck)
+            // console.log(`Discard Pile: ${discardPile}`)
+            // console.log(`Player Cards: ${playerCards}`)
+            // console.log(`Dealer Cards: ${dealerCards}`)
             
         })
         
@@ -263,8 +256,8 @@ const userElement= document.querySelector('#user-player');
                 dealerCards.push((deck.shift()));
                 addCard(dealerCards[2], dealerElement);
             };
-            
             dealerSum = cardValue(dealerCards);
+            //console.log(dealerSum)
         };
      
     
@@ -272,7 +265,6 @@ const userElement= document.querySelector('#user-player');
         //Shuffels and pushes unactive cards back into the active deck
         function discardShuffle(arr) {
             shuffleDeck(arr);
-            
             while(arr.length > 25) {
                 deck.push(arr[arr.length-1]);
                 arr.pop()
