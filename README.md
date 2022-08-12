@@ -62,7 +62,7 @@ Thank you friends, GA fellows and GA instructors for long code reviews, late nig
 
 ## Next Steps:
 
-I was not able to accomplish my stretch goals.  I would like to add a split function to allow Aces to be either 1 or 11.  I would like to add 2 AIs to make the game more interactive for the player.  In real-life black jack, the dealer is dealt a face down card and I would like to add this feature as well.
+I was not able to accomplish my stretch goals.  I would like to add a split function to allow Aces to be either 1 or 11.  I would like to add 2 AIs to make the game more interactive for the player.  In real-life black jack, the dealer is dealt a face down card and I would like to add this feature as well.  There are still some bugs that occur in the game that I would like to correct in a different time.
 
 ## Support:
 
