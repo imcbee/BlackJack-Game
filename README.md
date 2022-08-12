@@ -58,7 +58,7 @@ The win determination function was an issue that kept reappearing throughout the
 
 ## Thank you for your support!!!
 
-Thank you friends, GA fellows and GA instructors for long code reviews, late nights and finding the dumbest mistakes I've made in my coding challenges.  Love you all!!!
+Thank you friends, GA fellows and GA instructors for long code reviews, late nights and finding the dumbest mistakes I've made in my coding challenges.   Love you all!!!
 
 ## Next Steps:
 
@@ -67,3 +67,7 @@ I was not able to accomplish my stretch goals.  I would like to add a split func
 ## Support:
 
 For any questions regarding this project, please email me directly at [imcbee@terpmail.umd.edu](mailto:imcbee@terpmail.umd.edu)
+
+## Resources:
+
+https://www.kenney.nl/assets/playing-cards-pack
